@@ -1,4 +1,4 @@
-# XIQ CCG CSV
+# XIQ CCG CSV UPLOAD
 ##### XIQ_CCG_CSV.py
 ### <span style="color:purple">Purpose</span>
 This script will take a CSV file with these 2 columns: serialNumbers,cloudConfigGroup and assign the devices with the serial numbers to the named cloud config group, if it exists. 
