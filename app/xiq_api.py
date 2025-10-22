@@ -310,41 +310,7 @@ class XIQ:
             logger.warning(log_msg)
             raise ValueError(log_msg)
 
-    ## LOCATIONS
-    def getFloors(self, building_name):
-        floors = {}
-        errors =[]
-        info = "gathering floors"
-        url = self.URL + '/locations/building?name=' + building_name
-        rawList = self.__setup_get_api_call(info,url)
-        if rawList['total_count'] == 0:
-            error_msg = (f"No building was found with the name {building_name}")
-            errors.append(error_msg)
-        elif rawList['total_count'] > 1:
-            error_msg = (f"Multiple buildings found with the name {building_name}\n\t")
-            error_msg += ", ".join([x['name'] for x in rawList['data']])
-            errors.append(error_msg)
-        else:
-            if len(rawList['data']) != 1:
-                error_msg = (f"Multiple buildings found with the name {building_name}\n\t")
-                error_msg += ", ".join([x['name'] for x in rawList['data']])
-                errors.append(error_msg)
-            if building_name != rawList['data'][0]['name']:
-                error_msg = (f"Building {building_name} does not match what was found.\n\t")
-                error_msg += (f"Building {rawList['data'][0]['name']} was found, please re-enter if you would like to run against this building.")
-                errors.append(error_msg)
-            else:
-                floors = self._gatherFloorList(info, rawList['data'][0]['id'])
-                return floors
-        if errors:
-            floors['errors'] = errors
-        return floors
-
-    def _gatherFloorList(self, info, bld_id):
-        url = self.URL + '/locations/tree?parentId=' + str(bld_id) + '&expandChildren=false' 
-        rawList = self.__setup_get_api_call(info,url)
-        return rawList
-
+   
     ## Devices
     def collectDevices(self, pageSize, location_id=None):
         info = "collecting devices" 
